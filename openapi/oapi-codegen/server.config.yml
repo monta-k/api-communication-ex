@@ -1,0 +1,6 @@
+package: adapters
+generate:
+  std-http-server: true
+output: go/oapi-codegen/adapters/server.gen.go
+output-options:
+  skip-prune: true

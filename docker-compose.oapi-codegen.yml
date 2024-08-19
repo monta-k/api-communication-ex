@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  movie-codegen:
+    build:
+      dockerfile: docker/oapi-codegen.Dockerfile
+    volumes:
+      - ./:/src/go/app
+    working_dir: /src/go/app
+    command: >
+      sh -c '
+      oapi-codegen -config ./openapi/oapi-codegen/server.config.yml ./openapi/schema.yml &&
+      oapi-codegen -config ./openapi/oapi-codegen/model.config.yml ./openapi/schema.yml &&
+      oapi-codegen -config ./openapi/oapi-codegen/client.config.yml ./openapi/schema.yml
+      '

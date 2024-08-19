@@ -1,0 +1,6 @@
+package: adapters
+generate:
+  models: true
+output: go/oapi-codegen/adapters/model.gen.go
+output-options:
+  skip-prune: true
