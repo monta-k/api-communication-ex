@@ -1,15 +1,21 @@
 package main
 
 import (
-	"fmt"
+	oapicodegen "api-communication-ex/oapi-codegen"
+	"api-communication-ex/oapi-codegen/adapters"
 	"log"
 	"net/http"
 )
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, World!!!!")
-	})
+	oapiCodegenServer := oapicodegen.NewOAPICodeGenServer()
+	r := http.NewServeMux()
+	h := adapters.HandlerFromMux(oapiCodegenServer, r)
+	s := &http.Server{
+		Handler: h,
+		Addr:    "0.0.0.0:8080",
+	}
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	// And we serve HTTP until the world ends.
+	log.Fatal(s.ListenAndServe())
 }
