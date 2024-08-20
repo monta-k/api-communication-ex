@@ -8,15 +8,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var GetCmd = &cobra.Command{
-	Use:   "get",
-	Short: "Get a pet by ID",
+var ListCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List all pets",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		id, err := cmd.PersistentFlags().GetString("id")
-		if err != nil {
-			return err
-		}
-
 		client, err := adapters.NewClientWithResponses("http://localhost:8080")
 		if err != nil {
 			return err
@@ -24,20 +19,18 @@ var GetCmd = &cobra.Command{
 
 		ctx := context.Background()
 
-		response, err := client.ShowPetByIdWithResponse(ctx, id)
+		response, err := client.ListPetsWithResponse(ctx, nil)
 		if err != nil {
 			return err
 		}
 
 		fmt.Println("http response code:", response.StatusCode())
-		fmt.Println("Successfully got pet:", response.JSON200)
+		fmt.Println("Successfully got pets:", response.JSON200)
 
 		return nil
 	},
 }
 
 func init() {
-	GetCmd.PersistentFlags().StringP("id", "", "", "ID of the pet to get")
-	GetCmd.MarkFlagRequired("id")
-	rootCmd.AddCommand(GetCmd)
+	rootCmd.AddCommand(ListCmd)
 }
