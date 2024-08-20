@@ -37,6 +37,7 @@ var GetCmd = &cobra.Command{
 }
 
 func init() {
-	GetCmd.PersistentFlags().StringP("id", "", "1", "ID of the pet to get")
+	GetCmd.PersistentFlags().StringP("id", "", "", "ID of the pet to get")
+	GetCmd.MarkFlagRequired("id")
 	rootCmd.AddCommand(GetCmd)
 }
