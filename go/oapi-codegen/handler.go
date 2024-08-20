@@ -29,6 +29,7 @@ func (OAPICodeGenServer) ListPets(w http.ResponseWriter, r *http.Request, params
 		},
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(resp)
 }
@@ -45,6 +46,7 @@ func (OAPICodeGenServer) CreatePets(w http.ResponseWriter, r *http.Request) {
 		Tag:  requestBody.Tag,
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	_ = json.NewEncoder(w).Encode(resp)
 }
@@ -62,6 +64,7 @@ func (OAPICodeGenServer) ShowPetById(w http.ResponseWriter, r *http.Request, pet
 		Tag:  nil,
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(resp)
 }
