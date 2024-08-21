@@ -3,7 +3,7 @@ version: "3"
 services:
   oapi-codegen:
     build:
-      dockerfile: docker/oapi-codegen.Dockerfile
+      dockerfile: docker/go-codegen.Dockerfile
     volumes:
       - ./:/src/go/app
     working_dir: /src/go/app
@@ -16,7 +16,7 @@ services:
 
   gqlgen:
     build:
-      dockerfile: docker/gqlgen.Dockerfile
+      dockerfile: docker/go-codegen.Dockerfile
     volumes:
       - ./:/src/go/app
     working_dir: /src/go/app/go/gqlgen
