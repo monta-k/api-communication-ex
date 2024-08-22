@@ -5,6 +5,7 @@ go 1.23.0
 require (
 	github.com/99designs/gqlgen v0.17.49
 	github.com/oapi-codegen/runtime v1.1.1
+	github.com/shurcooL/graphql v0.0.0-20230722043721-ed46e5a46466
 	github.com/spf13/cobra v1.8.1
 	github.com/vektah/gqlparser/v2 v2.5.16
 )
