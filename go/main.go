@@ -20,7 +20,6 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -34,16 +33,16 @@ func main() {
 	// REST server setup
 	oapiCodegenServer := oapicodegen.NewOAPICodeGenServer()
 	h := adapters.HandlerFromMux(oapiCodegenServer, r)
-
 	httpServer := &http.Server{
 		Handler: h,
 		Addr:    "0.0.0.0:8080",
 	}
 
+	// gRPC server setup
 	grpcServer := grpc.NewServer()
 	hellopb.RegisterGreetingServiceServer(grpcServer, mygrpcserver.NewMyServer())
-	reflection.Register(grpcServer)
 
+	// Start gRPC server in a goroutine
 	go func() {
 		lis, err := net.Listen("tcp", ":50051")
 		if err != nil {

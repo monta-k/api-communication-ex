@@ -5,3 +5,5 @@
     - oapi-codegen
   - GraphQL
     - gqlgen
+  - gRPC
+    - protoBuf
