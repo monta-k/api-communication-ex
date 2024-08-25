@@ -5,6 +5,7 @@ services:
       dockerfile: docker/go.Dockerfile
     ports:
       - "8080:8080"
+      - "50051:50051"
     volumes:
       - ./go:/src/go/app
     working_dir: /src/go/app
