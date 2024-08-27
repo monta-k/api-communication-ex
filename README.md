@@ -7,3 +7,5 @@
     - gqlgen
   - gRPC
     - protoBuf
+  - Connect
+    - connect-go

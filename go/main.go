@@ -1,6 +1,8 @@
 package main
 
 import (
+	connecgo "api-communication-ex/connect-go"
+	"api-communication-ex/connect-go/gen/greet/v1/greetv1connect"
 	"api-communication-ex/gqlgen/generated"
 	"api-communication-ex/gqlgen/graph"
 	oapicodegen "api-communication-ex/oapi-codegen"
@@ -19,6 +21,8 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
 )
 
@@ -30,11 +34,18 @@ func main() {
 	r.Handle("/graphql", srv)
 	r.Handle("/graphql-playground", playground.Handler("GraphQL playground", "/graphql"))
 
+	// connect-go server setup
+	greetServer := connecgo.NewGreetServer()
+	path, handler := greetv1connect.NewGreetServiceHandler(greetServer)
+	r.Handle(path, handler)
+
 	// REST server setup
 	oapiCodegenServer := oapicodegen.NewOAPICodeGenServer()
 	h := adapters.HandlerFromMux(oapiCodegenServer, r)
+
+	h2cHandler := h2c.NewHandler(h, &http2.Server{})
 	httpServer := &http.Server{
-		Handler: h,
+		Handler: h2cHandler,
 		Addr:    "0.0.0.0:8080",
 	}
 
