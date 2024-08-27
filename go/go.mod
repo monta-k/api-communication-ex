@@ -3,6 +3,7 @@ module api-communication-ex
 go 1.23.0
 
 require (
+	connectrpc.com/connect v1.16.2
 	github.com/99designs/gqlgen v0.17.49
 	github.com/oapi-codegen/runtime v1.1.1
 	github.com/shurcooL/graphql v0.0.0-20230722043721-ed46e5a46466

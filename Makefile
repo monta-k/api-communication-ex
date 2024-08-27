@@ -9,3 +9,6 @@ generate-go-gqlgen:
 
 generate-go-grpc:
 	docker compose -f docker-compose.go-codegen.yml up $(BUILD) grpc
+
+generate-go-connect:
+	docker compose -f docker-compose.go-codegen.yml up $(BUILD) connect-go

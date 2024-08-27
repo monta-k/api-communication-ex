@@ -35,3 +35,16 @@ services:
         --go-grpc_out=./pkg/grpc --go-grpc_opt=paths=source_relative \
         hello.proto
       '
+
+  connect-go:
+    build:
+      dockerfile: docker/go-codegen.Dockerfile
+    volumes:
+      - ./:/src/go/app
+    working_dir: /src/go/app/go/connect-go
+    command: >
+      sh -c '
+        protoc --go_out=gen --go_opt=paths=source_relative \
+        --connect-go_out=gen --connect-go_opt=paths=source_relative \
+        greet/v1/greet.proto
+      '
