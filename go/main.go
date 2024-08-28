@@ -7,7 +7,7 @@ import (
 	"api-communication-ex/gqlgen/graph"
 	oapicodegen "api-communication-ex/oapi-codegen"
 	"api-communication-ex/oapi-codegen/adapters"
-	middleware "api-communication-ex/oapi-codegen/middeware"
+	"api-communication-ex/oapi-codegen/auth"
 	"context"
 	"log"
 	"net"
@@ -45,7 +45,7 @@ func main() {
 	h := adapters.HandlerWithOptions(oapiCodegenServer, adapters.StdHTTPServerOptions{
 		BaseRouter: r,
 		Middlewares: []adapters.MiddlewareFunc{
-			middleware.AuthMiddleware,
+			auth.AuthMiddleware,
 		},
 	})
 

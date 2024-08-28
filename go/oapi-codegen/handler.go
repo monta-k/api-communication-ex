@@ -2,6 +2,7 @@ package oapicodegen
 
 import (
 	"api-communication-ex/oapi-codegen/adapters"
+	"api-communication-ex/oapi-codegen/auth"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -15,6 +16,13 @@ func NewOAPICodeGenServer() *OAPICodeGenServer {
 }
 
 func (OAPICodeGenServer) ListPets(w http.ResponseWriter, r *http.Request, params adapters.ListPetsParams) {
+	user := auth.UserFromContext(r.Context())
+	if user == nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+	fmt.Println("user", user)
+
 	fmt.Println("params", params)
 	resp := adapters.Pets{
 		adapters.Pet{
@@ -35,6 +43,13 @@ func (OAPICodeGenServer) ListPets(w http.ResponseWriter, r *http.Request, params
 }
 
 func (OAPICodeGenServer) CreatePets(w http.ResponseWriter, r *http.Request) {
+	user := auth.UserFromContext(r.Context())
+	if user == nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+	fmt.Println("user", user)
+
 	var requestBody adapters.CreatePetsJSONRequestBody
 	if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
@@ -52,6 +67,13 @@ func (OAPICodeGenServer) CreatePets(w http.ResponseWriter, r *http.Request) {
 }
 
 func (OAPICodeGenServer) ShowPetById(w http.ResponseWriter, r *http.Request, petId string) {
+	user := auth.UserFromContext(r.Context())
+	if user == nil {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+	fmt.Println("user", user)
+
 	id, err := strconv.ParseInt(petId, 10, 64)
 	if err != nil {
 		http.Error(w, "Invalid petId", http.StatusBadRequest)
