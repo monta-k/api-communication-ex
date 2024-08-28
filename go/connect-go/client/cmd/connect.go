@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 
+	myconnect "api-communication-ex/pkg/connect"
+
 	"connectrpc.com/connect"
 	"github.com/spf13/cobra"
 )
@@ -15,7 +17,8 @@ var ConnectCmd = &cobra.Command{
 	Use:   "connect",
 	Short: "use connect",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		client := greetv1connect.NewGreetServiceClient(http.DefaultClient, "http://localhost:8080")
+		interceptors := connect.WithInterceptors(myconnect.NewAuthClientInterceptor("token"))
+		client := greetv1connect.NewGreetServiceClient(http.DefaultClient, "http://localhost:8080", interceptors)
 
 		res, err := client.Greet(
 			context.Background(),

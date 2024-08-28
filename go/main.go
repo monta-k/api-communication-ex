@@ -22,6 +22,9 @@ import (
 
 	mygrpc "api-communication-ex/pkg/grpc"
 
+	myconnect "api-communication-ex/pkg/connect"
+
+	"connectrpc.com/connect"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/auth"
@@ -39,8 +42,9 @@ func main() {
 	r.Handle("/graphql-playground", playground.Handler("GraphQL playground", "/graphql"))
 
 	// connect-go server setup
+	interceptors := connect.WithInterceptors(myconnect.NewAuthServerInterceptor())
 	greetServer := connecgo.NewGreetServer()
-	path, handler := greetv1connect.NewGreetServiceHandler(greetServer)
+	path, handler := greetv1connect.NewGreetServiceHandler(greetServer, interceptors)
 	r.Handle(path, handler)
 
 	// REST server setup

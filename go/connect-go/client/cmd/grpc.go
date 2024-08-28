@@ -3,6 +3,7 @@ package cmd
 import (
 	greetv1 "api-communication-ex/connect-go/gen/greet/v1"
 	"api-communication-ex/connect-go/gen/greet/v1/greetv1connect"
+	myconnect "api-communication-ex/pkg/connect"
 	"context"
 	"log"
 	"net/http"
@@ -15,7 +16,8 @@ var GrpcCmd = &cobra.Command{
 	Use:   "grpc",
 	Short: "use grpc",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		client := greetv1connect.NewGreetServiceClient(http.DefaultClient, "http://localhost:8080", connect.WithGRPC())
+		interceptors := connect.WithInterceptors(myconnect.NewAuthClientInterceptor("token"))
+		client := greetv1connect.NewGreetServiceClient(http.DefaultClient, "http://localhost:8080", connect.WithGRPC(), interceptors)
 
 		res, err := client.Greet(
 			context.Background(),
