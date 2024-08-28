@@ -1,6 +1,7 @@
 # api-communication-ex
 
 - Go
+
   - REST
     - oapi-codegen
   - GraphQL
@@ -9,3 +10,7 @@
     - protoBuf
   - Connect
     - connect-go
+
+- ~~TypeScript~~
+  - ~~GraphQL~~
+    - ~~Apollo~~
