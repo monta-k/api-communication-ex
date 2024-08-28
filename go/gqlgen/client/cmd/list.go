@@ -24,7 +24,8 @@ var ListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all todos",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		client := graphql.NewClient("http://localhost:8080/graphql", nil)
+		httpClient := NewHTTPClientWithAuthHeader("token")
+		client := graphql.NewClient("http://localhost:8080/graphql", httpClient)
 
 		ctx := context.Background()
 

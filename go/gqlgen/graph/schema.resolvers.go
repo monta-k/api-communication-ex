@@ -7,11 +7,19 @@ package graph
 import (
 	"api-communication-ex/gqlgen/generated"
 	"api-communication-ex/gqlgen/graph/model"
+	"api-communication-ex/pkg/auth"
 	"context"
+	"fmt"
 )
 
 // CreateTodo is the resolver for the createTodo field.
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+	user := auth.UserFromContext(ctx)
+	if user == nil {
+		return nil, fmt.Errorf("unauthorized")
+	}
+	fmt.Println("user", user)
+
 	return &model.Todo{
 		ID:   "3",
 		Text: input.Text,
@@ -25,6 +33,12 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 
 // Todos is the resolver for the todos field.
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+	user := auth.UserFromContext(ctx)
+	if user == nil {
+		return nil, fmt.Errorf("unauthorized")
+	}
+	fmt.Println("user", user)
+
 	return []*model.Todo{
 		{
 			ID:   "1",

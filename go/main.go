@@ -7,7 +7,7 @@ import (
 	"api-communication-ex/gqlgen/graph"
 	oapicodegen "api-communication-ex/oapi-codegen"
 	"api-communication-ex/oapi-codegen/adapters"
-	"api-communication-ex/oapi-codegen/auth"
+	"api-communication-ex/pkg/auth"
 	"context"
 	"log"
 	"net"
@@ -32,7 +32,7 @@ func main() {
 
 	// GraphQL server setup
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
-	r.Handle("/graphql", srv)
+	r.Handle("/graphql", auth.AuthMiddleware(srv))
 	r.Handle("/graphql-playground", playground.Handler("GraphQL playground", "/graphql"))
 
 	// connect-go server setup

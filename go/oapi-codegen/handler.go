@@ -2,7 +2,7 @@ package oapicodegen
 
 import (
 	"api-communication-ex/oapi-codegen/adapters"
-	"api-communication-ex/oapi-codegen/auth"
+	"api-communication-ex/pkg/auth"
 	"encoding/json"
 	"fmt"
 	"net/http"
