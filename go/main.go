@@ -7,6 +7,7 @@ import (
 	"api-communication-ex/gqlgen/graph"
 	oapicodegen "api-communication-ex/oapi-codegen"
 	"api-communication-ex/oapi-codegen/adapters"
+	middleware "api-communication-ex/oapi-codegen/middeware"
 	"context"
 	"log"
 	"net"
@@ -41,7 +42,12 @@ func main() {
 
 	// REST server setup
 	oapiCodegenServer := oapicodegen.NewOAPICodeGenServer()
-	h := adapters.HandlerFromMux(oapiCodegenServer, r)
+	h := adapters.HandlerWithOptions(oapiCodegenServer, adapters.StdHTTPServerOptions{
+		BaseRouter: r,
+		Middlewares: []adapters.MiddlewareFunc{
+			middleware.AuthMiddleware,
+		},
+	})
 
 	h2cHandler := h2c.NewHandler(h, &http2.Server{})
 	httpServer := &http.Server{
