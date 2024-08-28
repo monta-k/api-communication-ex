@@ -12,7 +12,7 @@ var ListCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all pets",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		client, err := adapters.NewClientWithResponses("http://localhost:8080")
+		client, err := adapters.NewClientWithResponses("http://localhost:8080", adapters.WithRequestEditorFn(AddAuthHeader("token")))
 		if err != nil {
 			return err
 		}

@@ -25,7 +25,7 @@ var PostCmd = &cobra.Command{
 			return err
 		}
 
-		client, err := adapters.NewClientWithResponses("http://localhost:8080")
+		client, err := adapters.NewClientWithResponses("http://localhost:8080", adapters.WithRequestEditorFn(AddAuthHeader("token")))
 		if err != nil {
 			return err
 		}
