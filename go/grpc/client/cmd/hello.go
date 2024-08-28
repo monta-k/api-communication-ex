@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/metadata"
 )
 
 var HelloCmd = &cobra.Command{
@@ -25,9 +26,11 @@ var HelloCmd = &cobra.Command{
 		}
 		defer conn.Close()
 
+		md := metadata.New(map[string]string{"authorization": "Bearer token"})
+		ctx := metadata.NewOutgoingContext(context.Background(), md)
 		client := hellopb.NewGreetingServiceClient(conn)
 
-		res, err := client.Hello(context.Background(), &hellopb.HelloRequest{
+		res, err := client.Hello(ctx, &hellopb.HelloRequest{
 			Name: name,
 		})
 		if err != nil {

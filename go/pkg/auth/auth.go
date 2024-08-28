@@ -8,7 +8,7 @@ import (
 
 type userContextKey struct{}
 
-var userCtxKey = &userContextKey{}
+var UserCtxKey = &userContextKey{}
 
 type User struct {
 	Name string
@@ -42,14 +42,14 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			Name: "user",
 		}
 
-		r = r.WithContext(context.WithValue(r.Context(), userCtxKey, user))
+		r = r.WithContext(context.WithValue(r.Context(), UserCtxKey, user))
 
 		next.ServeHTTP(w, r)
 	})
 }
 
 func UserFromContext(ctx context.Context) *User {
-	user, ok := ctx.Value(userCtxKey).(*User)
+	user, ok := ctx.Value(UserCtxKey).(*User)
 	if !ok {
 		return nil
 	}

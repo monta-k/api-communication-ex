@@ -20,8 +20,11 @@ import (
 	mygrpcserver "api-communication-ex/grpc"
 	hellopb "api-communication-ex/grpc/pkg/grpc"
 
+	mygrpc "api-communication-ex/pkg/grpc"
+
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/auth"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
@@ -56,7 +59,8 @@ func main() {
 	}
 
 	// gRPC server setup
-	grpcServer := grpc.NewServer()
+	authInterceptor := grpc.UnaryInterceptor(grpc_auth.UnaryServerInterceptor(mygrpc.Authenticate))
+	grpcServer := grpc.NewServer(authInterceptor)
 	hellopb.RegisterGreetingServiceServer(grpcServer, mygrpcserver.NewMyServer())
 
 	// Start gRPC server in a goroutine
