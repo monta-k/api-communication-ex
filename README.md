@@ -11,6 +11,6 @@
   - Connect
     - connect-go
 
-- ~~TypeScript~~
-  - ~~GraphQL~~
-    - ~~Apollo~~
+- TypeScript
+  - GraphQL
+    - Apollo
