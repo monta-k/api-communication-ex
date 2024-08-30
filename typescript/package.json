@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "apollo-server": "pnpm -F \"apollo-server\""
+    "apollo": "pnpm -F \"apollo\""
   },
   "keywords": [],
   "author": "",

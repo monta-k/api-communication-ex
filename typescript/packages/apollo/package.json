@@ -1,5 +1,5 @@
 {
-  "name": "apollo-server",
+  "name": "apollo",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,12 +7,15 @@
     "dev": "ts-node-dev --respawn src/index.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
+    "call-todos": "ts-node-dev src/client/todos.ts",
+    "call-create-todo": "ts-node-dev src/client/createTodo.ts",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/client": "^3.11.5",
     "@apollo/server": "^4.11.0",
     "@graphql-tools/graphql-file-loader": "^8.0.1",
     "@graphql-tools/load": "^8.0.2",
