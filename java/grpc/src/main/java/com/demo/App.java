@@ -6,6 +6,11 @@ package com.demo;
  */
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        String greeting = sayHello("John");
+        System.out.println(greeting);
+    }
+
+    public static String sayHello(String name) {
+        return "Hello " + name;
     }
 }

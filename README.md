@@ -17,5 +17,5 @@
     - Apollo
 
 - Java
-  - grpc
+  - gRPC
     - protoBuf(in Progress)
