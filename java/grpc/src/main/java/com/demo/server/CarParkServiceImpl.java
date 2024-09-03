@@ -8,21 +8,22 @@ import com.demo.ParkResponseManyTimes;
 import io.grpc.stub.StreamObserver;
 
 public class CarParkServiceImpl extends CarParkServiceGrpc.CarParkServiceImplBase {
-  
-  @Override
-  public void parkVehicle(com.demo.ParkRequest request, io.grpc.stub.StreamObserver<com.demo.ParkResponse> responseObserver) {
-      String vehicleNo = request.getVehicle().getVehicleNumber();
-      String vehicleType = request.getVehicle().getVehicleType();
 
-      System.out.println("The vehicle of number " + vehicleNo + " and type " + vehicleType + " entered the park.");
-      String resultMsg = "The vehicle of number " + vehicleNo + " and type " + vehicleType + " is parked.";
+    @Override
+    public void parkVehicle(com.demo.ParkRequest request,
+            io.grpc.stub.StreamObserver<com.demo.ParkResponse> responseObserver) {
+        String vehicleNo = request.getVehicle().getVehicleNumber();
+        String vehicleType = request.getVehicle().getVehicleType();
 
-      ParkResponse parkResponse = ParkResponse.newBuilder().setResult(resultMsg).build();
+        System.out.println("The vehicle of number " + vehicleNo + " and type " + vehicleType + " entered the park.");
+        String resultMsg = "The vehicle of number " + vehicleNo + " and type " + vehicleType + " is parked.";
 
-      responseObserver.onNext(parkResponse);
+        ParkResponse parkResponse = ParkResponse.newBuilder().setResult(resultMsg).build();
 
-      responseObserver.onCompleted();
-      System.out.println(resultMsg);
+        responseObserver.onNext(parkResponse);
+
+        responseObserver.onCompleted();
+        System.out.println(resultMsg);
     }
 
     @Override

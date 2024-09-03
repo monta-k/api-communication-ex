@@ -12,13 +12,14 @@ public class CarParkClient {
   public static void main(String[] args) {
     ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 5003).usePlaintext().build();
 
-  CarParkServiceGrpc.CarParkServiceBlockingStub stub = CarParkServiceGrpc.newBlockingStub(channel);
+    CarParkServiceGrpc.CarParkServiceBlockingStub stub = CarParkServiceGrpc.newBlockingStub(channel);
 
-  ParkRequest parkRequest = ParkRequest.newBuilder().setVehicle(Vehicle.newBuilder().setVehicleNumber("NA-1324").setVehicleType("BUS").build()).build();
+    ParkRequest parkRequest = ParkRequest.newBuilder()
+        .setVehicle(Vehicle.newBuilder().setVehicleNumber("NA-1324").setVehicleType("BUS").build()).build();
 
-  ParkResponse parkResponse = stub.parkVehicle(parkRequest);
-  
-  System.out.println("Response for the first call: " + parkResponse.getResult());
-  
+    ParkResponse parkResponse = stub.parkVehicle(parkRequest);
+
+    System.out.println("Response for the first call: " + parkResponse.getResult());
+
   }
 }
